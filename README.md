@@ -2,6 +2,8 @@
 
 > An interactive 30-page laptop shortcut guide designed to make everyday computer use faster, easier, and more productive.
 
+**Project Date:** 19-08-26
+
 ## 🚀 Live Demo
 
 👉 https://laptop-shortcut-series.netlify.app/
@@ -54,3 +56,4 @@ Laptop-shortcut-series/
 ├── index.html
 ├── README.md
 └── LICENSE
+```
