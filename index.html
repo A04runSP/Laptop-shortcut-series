@@ -96,36 +96,42 @@ function explanation(row, page) {
   const [keys, name, action] = row;
   const title = page.title.toLowerCase();
 
-  let howToUse = "Make sure the relevant app or window is active, then press the keys together.";
-  if (keys.includes("→")) {
-    howToUse = "Follow the sequence shown from left to right. For Win + R commands, open Run, type the command after the arrow, then press Enter.";
-  } else if (keys.includes("Click")) {
-    howToUse = "Hold the listed modifier key if there is one, then click the indicated area or item.";
-  } else if (keys.includes("Drag")) {
-    howToUse = "Hold the listed keys while dragging with the mouse or touchpad.";
-  } else if (keys.includes("/")) {
-    howToUse = "Use either key or key combination shown, depending on the app and keyboard layout.";
-  }
+  const lines = [
+    "WHAT IT DOES: " + action
+  ];
 
-  let note = "Availability can vary by application, Windows version, and custom keyboard settings.";
+  const examples = {
+    "Copy": "Example: select text or a file first, then copy it so you can paste a duplicate elsewhere.",
+    "Cut": "Example: select a file or text, cut it, then paste it in the destination to move it.",
+    "Paste": "Example: copy or cut something first, then paste it where you want it to appear.",
+    "Undo": "Example: if you accidentally delete or change something, undo to reverse the last action.",
+    "Redo": "Example: after undoing an action, redo to apply that action again.",
+    "Select All": "Example: select all text in a document or all items in the current folder view.",
+    "Save": "Example: save your work regularly to keep the latest changes in the current file.",
+    "Save As": "Example: create a separate copy with a different filename or save it to another folder.",
+    "Find / Search": "Example: search for a word in a long document or page instead of scanning manually.",
+    "Start Menu": "Example: open Start, then search for an app or choose a power option.",
+    "Show / Hide Desktop": "Example: reveal a desktop file quickly, then press the shortcut again to return to your windows.",
+    "File Explorer": "Example: open folders to browse, copy, move, rename, or find files.",
+    "Settings": "Example: open Windows settings to change display, network, Bluetooth, or personalization options.",
+    "Lock Laptop": "Example: lock the screen before stepping away; sign in again to resume your session.",
+    "Run": "Example: enter a known Windows command or app name in Run, then press Enter.",
+    "Clipboard History": "Example: choose a previously copied item from the clipboard history to paste it.",
+    "Screenshot": "Example: select the screen area you want to capture, then paste or save the capture."
+  };
+
+  if (examples[name]) lines.push("EXAMPLE: " + examples[name].replace(/^Example: /, ""));
   if (title.includes("browser") || title.includes("chrome") || title.includes("edge")) {
-    note = "Browser shortcuts may differ slightly between Chrome, Edge, and other browsers.";
+    lines.push("COMPATIBILITY: Browser behavior can vary slightly between Chrome, Edge, and other browsers.");
   } else if (title.includes("excel") || title.includes("word") || title.includes("powerpoint") || title.includes("office")) {
-    note = "The exact behavior can vary by Office app, document focus, and version.";
-  } else if (title.includes("vs code") || title.includes("coding") || title.includes("developer")) {
-    note = "Editor shortcuts can be changed by custom keybindings or extensions.";
-  } else if (title.includes("security")) {
-    note = "Check the action before confirming; some security or system operations can affect access or data.";
+    lines.push("COMPATIBILITY: The result can depend on the Office app, selected content, and version.");
+  } else if (title.includes("developer") || title.includes("coding") || title.includes("vs code")) {
+    lines.push("COMPATIBILITY: Custom keybindings or extensions may override editor shortcuts.");
   } else if (title.includes("power") || title.includes("performance")) {
-    note = "Function and Fn-key behavior depends on the laptop manufacturer and model.";
+    lines.push("COMPATIBILITY: Fn-key behavior depends on the laptop model and manufacturer utility.");
   }
 
-  return [
-    "1. FUNCTION: " + action,
-    "2. HOW TO USE: " + howToUse,
-    "3. RESULT: " + name + ".",
-    "4. NOTE: " + note
-  ].join("\n");
+  return lines.join("\\n");
 }
 function render(){
   const main = document.getElementById('main');
