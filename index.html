@@ -94,44 +94,62 @@ function keyHtml(keys) {
 }
 function explanation(row, page) {
   const [keys, name, action] = row;
-  const title = page.title.toLowerCase();
-
-  const lines = [
-    "WHAT IT DOES: " + action
-  ];
 
   const examples = {
-    "Copy": "Example: select text or a file first, then copy it so you can paste a duplicate elsewhere.",
-    "Cut": "Example: select a file or text, cut it, then paste it in the destination to move it.",
-    "Paste": "Example: copy or cut something first, then paste it where you want it to appear.",
-    "Undo": "Example: if you accidentally delete or change something, undo to reverse the last action.",
-    "Redo": "Example: after undoing an action, redo to apply that action again.",
-    "Select All": "Example: select all text in a document or all items in the current folder view.",
-    "Save": "Example: save your work regularly to keep the latest changes in the current file.",
-    "Save As": "Example: create a separate copy with a different filename or save it to another folder.",
-    "Find / Search": "Example: search for a word in a long document or page instead of scanning manually.",
-    "Start Menu": "Example: open Start, then search for an app or choose a power option.",
-    "Show / Hide Desktop": "Example: reveal a desktop file quickly, then press the shortcut again to return to your windows.",
-    "File Explorer": "Example: open folders to browse, copy, move, rename, or find files.",
-    "Settings": "Example: open Windows settings to change display, network, Bluetooth, or personalization options.",
-    "Lock Laptop": "Example: lock the screen before stepping away; sign in again to resume your session.",
-    "Run": "Example: enter a known Windows command or app name in Run, then press Enter.",
-    "Clipboard History": "Example: choose a previously copied item from the clipboard history to paste it.",
-    "Screenshot": "Example: select the screen area you want to capture, then paste or save the capture."
+    "Copy": "Select text or a file, press the shortcut, then paste it somewhere else to create a copy.",
+    "Cut": "Select text or a file, cut it, open the destination, then paste it to move it.",
+    "Paste": "Copy or cut content first, place the cursor or open the destination, then paste.",
+    "Undo": "If you remove a paragraph by mistake, undo to restore the previous state.",
+    "Redo": "After undoing a change, redo to apply that change again.",
+    "Select All": "In a document, use the shortcut to select all text before changing its formatting.",
+    "Save": "After editing a document, save it to keep the latest changes.",
+    "Save As": "Save a copy with a new filename when you want to keep the original unchanged.",
+    "Find / Search": "Search for a word in a long document to jump directly to its occurrence.",
+    "Start Menu": "Open Start to search for an app such as Calculator.",
+    "Show / Hide Desktop": "Reveal a file on the desktop, then use the shortcut again to return to your open windows.",
+    "File Explorer": "Open a folder to browse files, create folders, or move items.",
+    "Settings": "Open Settings to change Wi-Fi, display, Bluetooth, or personalization options.",
+    "Lock Laptop": "Lock the computer before stepping away; sign in again to continue.",
+    "Run": "Open Run, enter a known command such as notepad, then press Enter.",
+    "Clipboard History": "Open clipboard history and select an earlier copied item to paste it.",
+    "Screenshot": "Select the part of the screen you want to capture, then paste the image into a document.",
+    "Developer Tools": "Open a website, launch developer tools, and inspect an element to see its HTML and CSS.",
+    "Bookmark Manager": "Open the bookmark manager to find, organize, or delete saved pages.",
+    "Clear Browsing Data": "Choose a time range and data types, then confirm only the items you intend to remove.",
+    "Private Browsing Window": "Open a private window when you do not want that session's browsing history saved in the normal history.",
+    "Bookmarks Bar": "Show the bookmarks bar to access saved websites without opening the bookmarks menu.",
+    "New Tab": "Open another tab to keep a second website available without closing the current page.",
+    "Close Tab": "Close the tab you have finished using while leaving the other tabs open.",
+    "Next Tab": "Move to the next tab when several pages are open.",
+    "Previous Tab": "Return to the tab immediately before the current one.",
+    "Bookmark Page": "Save the current website as a bookmark so you can return to it later.",
+    "Downloads": "Open downloads to find a file you just downloaded.",
+    "Find on Page": "Search for a name or phrase on the current page instead of reading everything.",
+    "Zoom In": "Increase the page size when text or controls are too small to read.",
+    "Zoom Out": "Reduce page size to fit more content on the screen.",
+    "Reset Zoom": "Return the page to its default zoom after changing its size.",
+    "Homepage": "Open the home page configured in the browser settings.",
+    "Go Back": "Return to the page you visited immediately before the current one.",
+    "Go Forward": "After going back, move forward to the page you had been viewing.",
+    "New Window": "Open a separate browser window to keep a different set of tabs apart.",
+    "Print Page": "Open the print dialog to print the page or save it as a PDF.",
+    "View Page Source": "Open the page source to inspect the HTML sent by the website.",
+    "Bookmark All Tabs": "Save a group of open tabs into a bookmark folder where the browser supports it.",
+    "Hard Refresh": "Reload a page when it appears to be showing stale cached content.",
+    "Reload Page": "Reload the current page after a site has changed or failed to finish loading.",
+    "Full Screen": "Use full screen to give the web page more screen space, then exit when finished."
   };
 
-  if (examples[name]) lines.push("EXAMPLE: " + examples[name].replace(/^Example: /, ""));
-  if (title.includes("browser") || title.includes("chrome") || title.includes("edge")) {
-    lines.push("COMPATIBILITY: Browser behavior can vary slightly between Chrome, Edge, and other browsers.");
-  } else if (title.includes("excel") || title.includes("word") || title.includes("powerpoint") || title.includes("office")) {
-    lines.push("COMPATIBILITY: The result can depend on the Office app, selected content, and version.");
-  } else if (title.includes("developer") || title.includes("coding") || title.includes("vs code")) {
-    lines.push("COMPATIBILITY: Custom keybindings or extensions may override editor shortcuts.");
-  } else if (title.includes("power") || title.includes("performance")) {
-    lines.push("COMPATIBILITY: Fn-key behavior depends on the laptop model and manufacturer utility.");
+  let example = examples[name];
+  if (!example) {
+    const cleanAction = action.replace(/[.!]$/, "");
+    example = "For example, while using the relevant app, press " + keys + " to " + cleanAction.charAt(0).toLowerCase() + cleanAction.slice(1) + ".";
   }
 
-  return lines.join("\n");
+  return [
+    "What it does: " + action,
+    "Example: " + example
+  ].join("\\n");
 }
 function render(){
   const main = document.getElementById('main');
