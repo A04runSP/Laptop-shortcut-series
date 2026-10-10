@@ -6,7 +6,9 @@
 
 ## 🚀 Live Demo
 
-👉 
+👉 **[Open Laptop Shortcut Series](https://laptop-shortcut-series.vercel.app/)**
+
+**Production deployment:** https://laptop-shortcut-series.vercel.app/
 
 ## 📖 About
 
@@ -37,7 +39,7 @@ Each shortcut is presented with:
 - HTML
 - CSS
 - JavaScript
-- Netlify
+- Vercel
 - GitHub
 
 ## 🎯 Purpose
@@ -57,3 +59,10 @@ Laptop-shortcut-series/
 ├── README.md
 └── LICENSE
 ```
+
+## 🚀 Deployment
+
+The production website is deployed on Vercel:
+
+- **Live site:** https://laptop-shortcut-series.vercel.app/
+- **GitHub repository:** https://github.com/A04runSP/Laptop-shortcut-series
