@@ -6,7 +6,7 @@
 
 ## 🚀 Live Demo
 
-👉 https://laptop-shortcut-series.netlify.app/
+👉 
 
 ## 📖 About
 
