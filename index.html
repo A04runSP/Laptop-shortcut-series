@@ -52,9 +52,17 @@ h1{font-size:clamp(38px,7vw,78px);line-height:.98;margin:22px 0 14px;letter-spac
 .nav button{border:1px solid #29415c;background:#0d1725;color:#dce8f5;border-radius:11px;padding:10px 14px;cursor:pointer}
 .nav button:hover{border-color:var(--accent);color:#fff}
 .nav .jump{min-width:72px;text-align:center;color:#9eb0c5;font-size:12px}
-.toc{display:flex;gap:7px;flex-wrap:wrap;margin:18px 0 30px}
-.toc button{background:#0b1421;color:#8fa4ba;border:1px solid #1a2a3d;border-radius:999px;padding:7px 10px;font-size:11px;cursor:pointer}
+.category-nav{max-width:1180px;margin:0 auto;padding:10px 18px 0}
+.toc{display:flex;gap:7px;flex-wrap:wrap;margin:0 0 8px}
+.toc button{background:#0b1421;color:#8fa4ba;border:1px solid #1a2a3d;border-radius:999px;padding:8px 11px;font-size:11px;cursor:pointer;transition:background .15s,border-color .15s}
+.toc button:hover,.toc button:focus-visible{border-color:var(--accent);color:#fff;outline:none}
 .toc button.active{color:#fff;border-color:var(--accent);background:#0b1c2e}
+.mobile-category{display:none;width:100%;background:#0b1421;color:var(--text);border:1px solid #29415c;border-radius:12px;padding:12px;font:inherit}
+@media(max-width:760px){
+ .category-nav{padding:10px 12px 0}
+ .toc{display:none}
+ .mobile-category{display:block}
+}
 .hidden{display:none!important}
 @media(max-width:760px){
  .topbar{padding:11px 12px} .brand{font-size:12px} .counter{display:none}
@@ -73,6 +81,7 @@ h1{font-size:clamp(38px,7vw,78px);line-height:.98;margin:22px 0 14px;letter-spac
   <div class="search"><input id="search" placeholder="Search pages, shortcuts or actions…"></div>
   <div class="counter" id="counter">00 / 09</div>
 </header>
+<div class="category-nav"><div class="toc" id="toc" aria-label="Jump to category"></div><select class="mobile-category" id="mobileCategory" aria-label="Jump to category"><option value="0">Choose a category…</option></select></div>
 <main class="main" id="main"></main>
 <nav class="nav">
   <button onclick="go(-1)">← Previous</button>
@@ -151,7 +160,23 @@ function explanation(row, page) {
     "Example: " + example
   ].join("\n");
 }
+function renderCategoryNav(){
+  const toc=document.getElementById('toc');
+  const select=document.getElementById('mobileCategory');
+  toc.innerHTML=pages.map(p=>`<button type="button" class="${current===p.n&&!filtered?'active':''}" aria-current="${current===p.n&&!filtered?'page':'false'}" onclick="goToCategory(${p.n})">${escapeHtml(p.title)}</button>`).join('');
+  select.innerHTML='<option value="0">Choose a category…</option>'+pages.map(p=>`<option value="${p.n}" ${current===p.n&&!filtered?'selected':''}>${escapeHtml(p.title)}</option>`).join('');
+}
+function goToCategory(pageNumber){
+  filtered=null;
+  current=pageNumber;
+  document.getElementById('search').value='';
+  render();
+}
+document.getElementById('mobileCategory').addEventListener('change',e=>{
+  if(Number(e.target.value)>0) goToCategory(Number(e.target.value));
+});
 function render(){
+  renderCategoryNav();
   const main = document.getElementById('main');
   if(filtered){
     main.innerHTML = `<section class="slide">
@@ -165,9 +190,9 @@ function render(){
     main.innerHTML = `<section class="hero">
       <div class="kicker">Ultimate Reference Guide</div>
       <h1>Laptop Shortcut Series</h1>
-      <div class="lead">A searchable keyboard reference organized into 8 practical categories plus a compatibility reference. Learn the key, the command, what it does, and when to use it.</div>
+      <div class="lead">A searchable keyboard reference organized into 9 practical categories. Learn the key, the command, what it does, and when to use it.</div>
       <div class="pills"><span class="pill">Windows 10 / 11</span><span class="pill">Productivity</span><span class="pill">Browser</span><span class="pill">Office</span><span class="pill">Coding</span></div>
-      <div class="note"><b>How to use it:</b> press <b>← / →</b> or the buttons below to move between pages. Use the search box to find a shortcut across the entire guide.</div>
+      <div class="note"><b>How to use it:</b> choose a category from the navigation above, or use <b>← / →</b> and the Previous / Next buttons below. Search finds shortcuts across the entire guide.</div>
     </section>`;
   } else {
     const p=pages[current-1];
