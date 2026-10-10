@@ -1,8 +1,6 @@
 # 💻 Laptop Shortcut Series
 
-> An interactive 30-page laptop shortcut guide designed to make everyday computer use faster, easier, and more productive.
-
-**Project Date:** 19-08-26
+> An interactive keyboard shortcut reference organized into 8 practical categories plus a compatibility reference.
 
 ## 🚀 Live Demo
 
@@ -12,57 +10,64 @@
 
 ## 📖 About
 
-Laptop Shortcut Series is an interactive reference guide covering useful keyboard shortcuts for Windows, productivity, browsing, file management, coding, and everyday computer tasks.
+Laptop Shortcut Series is a searchable, mobile-friendly reference for Windows keyboard shortcuts, file and system tools, screenshots and accessibility, browsers, Microsoft Office, Excel, PowerPoint, VS Code, and laptop-specific controls.
 
-Each shortcut is presented with:
+Each entry provides:
 
-- ⌨️ Shortcut key combination
-- 🏷️ Shortcut name
-- 📌 What the shortcut does
-- 📖 Detailed explanation
-- 🧭 Easy navigation between pages
-- 🔎 Search functionality
+- ⌨️ Shortcut or command
+- 🏷️ Action name
+- 📌 What it does
+- 📖 Detailed explanation and practical use
+- 🔎 Search across the guide
+- ◀️▶️ Category navigation
+
+The guide distinguishes keyboard shortcuts from Run commands and menu paths. Version-, application-, and manufacturer-dependent behavior is labeled where relevant.
+
+## 🗂️ Guide Categories
+
+1. Essential Keyboard Shortcuts
+2. Windows & Multitasking
+3. Files, Folders & System Tools
+4. Screenshots & Accessibility
+5. Web Browsers
+6. Microsoft Word & Office
+7. Excel & PowerPoint
+8. Coding & Laptop Controls
+9. Reference & Compatibility
 
 ## ✨ Features
 
-- 📚 30-page interactive shortcut guide
-- ⌨️ Keyboard shortcut reference
-- 🔎 Search pages quickly
-- ◀️▶️ Previous and Next navigation
-- 📱 Mobile-friendly interface
-- 💻 Windows-focused shortcuts
-- 🌐 Works directly in the browser
-- ⚡ No installation required
+- Searchable shortcut reference
+- Previous / Next navigation and keyboard navigation
+- Mobile-friendly layout
+- Windows-focused shortcuts
+- Browser-based; no installation required
+- Compatibility notes for app-, version-, and hardware-specific behavior
 
 ## 🛠️ Built With
 
 - HTML
 - CSS
 - JavaScript
-- Vercel
 - GitHub
+- Vercel
 
 ## 🎯 Purpose
 
-The goal of this project is simple:
-
 **Turn keyboard shortcuts into an easy-to-understand interactive learning experience.**
 
-Instead of memorizing random key combinations, users can explore each shortcut and understand exactly what it does and when it is useful.
+Instead of memorizing random key combinations, users can explore what each shortcut does and when it is useful.
 
 ## 📂 Project Structure
 
 ```text
 Laptop-shortcut-series/
-│
 ├── index.html
 ├── README.md
 └── LICENSE
 ```
 
 ## 🚀 Deployment
-
-The production website is deployed on Vercel:
 
 - **Live site:** https://laptop-shortcut-series.vercel.app/
 - **GitHub repository:** https://github.com/A04runSP/Laptop-shortcut-series
