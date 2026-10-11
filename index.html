@@ -280,6 +280,7 @@ document.addEventListener('keydown',e=>{
   if(e.key==='End'){current=pages.length;render();}
 });
 document.getElementById('search').addEventListener('input',e=>{
+  if(learningMode) closeLearning();
   const q=e.target.value.trim().toLowerCase();
   if(!q){filtered=null;render();return;}
   filtered=[];
