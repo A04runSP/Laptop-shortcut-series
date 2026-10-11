@@ -178,10 +178,10 @@ document.getElementById('mobileCategory').addEventListener('change',e=>{
 function render(){
   renderCategoryNav();
   const main = document.getElementById('main');
-  if(filtered){
+  if(filtered !== null){
     main.innerHTML = `<section class="slide">
       <div class="section-head"><div><div class="kicker">Search results</div><h2>${filtered.length} matching <span>shortcuts</span></h2></div></div>
-      <div class="grid">${filtered.map(x=>cardHtml(x.row,x.page)).join('')}</div>
+      ${filtered.length ? `<div class="grid">${filtered.map(x=>cardHtml(x.row,x.page)).join('')}</div>` : `<div class="note" role="status">No matching shortcuts found. Try a different keyword or key combination.</div>`}
     </section>`;
     return;
   }
