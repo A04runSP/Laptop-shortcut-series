@@ -89,6 +89,18 @@ h1{font-size:clamp(38px,7vw,78px);line-height:.98;margin:22px 0 14px;letter-spac
  .keys{max-width:50%} .nav{width:calc(100% - 24px);justify-content:space-between}
  .nav button{padding:9px 11px}
 }
+.shortcut-card{display:flex;flex-direction:column;gap:14px;padding:clamp(16px,3vw,24px)}
+.shortcut-heading{display:flex;align-items:center;justify-content:space-between;gap:16px}
+.shortcut-heading h3{font-size:clamp(18px,2.4vw,24px);line-height:1.25;margin:0}
+.shortcut-card .keys{max-width:none;justify-content:flex-start;flex-wrap:nowrap;gap:5px}
+.shortcut-card .key{font-size:clamp(13px,2vw,16px);padding:8px 10px}
+.shortcut-action{font-size:16px!important;line-height:1.65!important;color:var(--text)!important;margin:0!important}
+.shortcut-example,.shortcut-reference{border-top:1px solid var(--line);padding-top:12px;color:var(--muted);font-size:14px;line-height:1.6}
+.shortcut-example b,.shortcut-reference b{display:block;color:var(--text);margin-bottom:5px}
+.shortcut-example p{font-size:14px;line-height:1.6;margin:0}
+.shortcut-reference a{display:inline-block;color:var(--accent2);text-decoration:none;margin-right:10px}
+.shortcut-reference a:hover{text-decoration:underline}
+@media(max-width:760px){.shortcut-heading{align-items:flex-start;flex-direction:column;gap:10px}.shortcut-card .keys{justify-content:flex-start;max-width:100%;flex-wrap:wrap}}
 </style>
 </head>
 <body>
@@ -2368,13 +2380,16 @@ function render(){
   window.scrollTo({top:0,behavior:'smooth'});
 }
 function cardHtml(row,page){
-  const [keys,name,action]=row;
-  return `<article class="card">
-    <div class="card-top">
-      <div><h3>${escapeHtml(name)}</h3><p>${escapeHtml(action)}</p></div>
-      <div class="keys">${keyHtml(keys)}</div>
-    </div>
-    <div class="detail"><b>Detailed explanation:</b> ${escapeHtml(explanation(row,page))}</div>
+  const [keys,name,rawAction]=row;
+  const urls=[...rawAction.matchAll(/https?:\\/\\/[^\\s)]+/g)].map(m=>m[0].replace(/[.,;]+$/,""));
+  let action=rawAction.replace(/https?:\\/\\/[^\\s)]+/g,"").replace(/\\b(?:Microsoft reference|Official reference|Reference)\\s*:?/gi,"").replace(/\\s+/g," ").trim();
+  action=action.replace(/\\bDetailed explanation\\s*:?/gi,"").replace(/\\bWhat it does\\s*:?/gi,"").trim();
+  const example=explanation(row,page).split(/\\n/).find(line=>line.startsWith("Example:"));
+  return `<article class="card shortcut-card">
+    <div class="shortcut-heading"><h3>${escapeHtml(name)}</h3><div class="keys">${keyHtml(keys)}</div></div>
+    <p class="shortcut-action">${escapeHtml(action || name)}</p>
+    ${example? `<div class="shortcut-example"><b>Example</b><p>${escapeHtml(example.replace(/^Example:\\s*/,""))}</p></div>`:""}
+    ${urls.length? `<div class="shortcut-reference"><b>Reference</b>${urls.map(url=>`<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">Open source ↗</a>`).join("")}</div>`:""}
   </article>`;
 }
 function go(delta){
