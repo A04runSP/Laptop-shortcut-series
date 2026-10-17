@@ -2411,7 +2411,7 @@ function cardHtml(row,page){
   return `<article class="card shortcut-card">
     <div class="shortcut-heading"><h3>${escapeHtml(name)}</h3><div class="keys">${keyHtml(keys)}</div></div>
     <p class="shortcut-action">${escapeHtml(action || name)}</p>
-    ${example? `<div class="shortcut-example"><b>Example</b><p>${escapeHtml(example)}</p></div`:""}
+    ${example? `<div class="shortcut-example"><b>Example</b><p>${escapeHtml(example)}</p></div>`:""}
     ${urls.length? `<div class="shortcut-reference"><b>Reference</b>${urls.map(url=>`<a class="reference-link" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">Open source ↗</a>`).join("")}</div>`:""}
   </article>`;
 }
