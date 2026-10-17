@@ -2245,8 +2245,8 @@ document.getElementById('search').addEventListener('input',e=>{
     "switch apps":["switch apps","alt + tab","task switcher"]
   };
   const normalized=q.replace(/[^a-z0-9+ ]/g," ").replace(/\\s+/g," ").trim();
-  const aliases=Object.entries(taskAliases).filter(([task,terms])=>task.includes(normalized)||terms.some(term=>term.includes(normalized)||normalized.includes(term))).flatMap(([task,terms])=>[task,...terms]);
-  const terms=[normalized,...aliases].filter(Boolean);
+  const matchedTask=Object.entries(taskAliases).find(([task,terms])=>normalized===task||terms.includes(normalized));
+  const terms=matchedTask?[normalized,...matchedTask].filter(Boolean):[normalized];
   pages.forEach(p=>p.rows.forEach(row=>{
     const hay=(p.title+' '+row.join(' ')).toLowerCase();
     if(terms.some(term=>hay.includes(term))) filtered.push({row,page:p});
