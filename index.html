@@ -101,6 +101,9 @@ h1{font-size:clamp(38px,7vw,78px);line-height:.98;margin:22px 0 14px;letter-spac
 .shortcut-reference a{display:inline-block;color:var(--accent2);text-decoration:none;margin-right:10px}
 .shortcut-reference a:hover{text-decoration:underline}
 @media(max-width:760px){.shortcut-heading{align-items:flex-start;flex-direction:column;gap:10px}.shortcut-card .keys{justify-content:flex-start;max-width:100%;flex-wrap:wrap}}
+.reference-link{display:inline-flex;align-items:center;gap:6px;padding:9px 13px;border:1px solid var(--accent2);border-radius:10px;background:color-mix(in srgb,var(--accent2) 13%,transparent);color:var(--accent2);font-weight:600;text-decoration:none;transition:background .15s ease,border-color .15s ease}
+.reference-link:hover,.reference-link:focus-visible{background:color-mix(in srgb,var(--accent2) 24%,transparent);border-color:var(--accent2);text-decoration:underline}
+.shortcut-reference{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
 </style>
 </head>
 <body>
@@ -2382,14 +2385,15 @@ function render(){
 function cardHtml(row,page){
   const [keys,name,rawAction]=row;
   const urls=[...rawAction.matchAll(/https?:\/\/[^\s)]+/g)].map(m=>m[0].replace(/[.,;]+$/,""));
+  const exampleText=explanation(row,page).split(/\n/).find(line=>line.startsWith("Example:"))||"";
+  const example=exampleText.replace(/^Example:\s*/,"").replace(/https?:\/\/[^\s)]+/g,"").replace(/\b(?:Microsoft|Official)?\s*reference\s*:?/gi,"").replace(/\s+/g," ").trim();
   let action=rawAction.replace(/https?:\/\/[^\s)]+/g,"").replace(/\b(?:Microsoft reference|Official reference|Reference)\s*:?/gi,"").replace(/\s+/g," ").trim();
   action=action.replace(/\bDetailed explanation\s*:?/gi,"").replace(/\bWhat it does\s*:?/gi,"").trim();
-  const example=explanation(row,page).split(/\n/).find(line=>line.startsWith("Example:"));
   return `<article class="card shortcut-card">
     <div class="shortcut-heading"><h3>${escapeHtml(name)}</h3><div class="keys">${keyHtml(keys)}</div></div>
     <p class="shortcut-action">${escapeHtml(action || name)}</p>
-    ${example? `<div class="shortcut-example"><b>Example</b><p>${escapeHtml(example.replace(/^Example:\s*/,""))}</p></div>`:""}
-    ${urls.length? `<div class="shortcut-reference"><b>Reference</b>${urls.map(url=>`<a href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">Open source ↗</a>`).join("")}</div>`:""}
+    ${example? `<div class="shortcut-example"><b>Example</b><p>${escapeHtml(example)}</p></div`:""}
+    ${urls.length? `<div class="shortcut-reference"><b>Reference</b>${urls.map(url=>`<a class="reference-link" href="${escapeHtml(url)}" target="_blank" rel="noopener noreferrer">Open source ↗</a>`).join("")}</div>`:""}
   </article>`;
 }
 function go(delta){
