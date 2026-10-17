@@ -2234,9 +2234,22 @@ document.getElementById('search').addEventListener('input',e=>{
   const q=e.target.value.trim().toLowerCase();
   if(!q){filtered=null;render();return;}
   filtered=[];
+  const taskAliases={
+    "find text":["find","search","locate","look for"],
+    "switch tabs":["next tab","previous tab","switch tab","tab"],
+    "capture screen":["screenshot","snip","screen capture"],
+    "move between cells":["cell","next cell","previous cell","move right","move left"],
+    "save a copy":["save as","copy","duplicate"],
+    "close a window":["close","exit","quit"],
+    "open settings":["settings","preferences"],
+    "switch apps":["switch apps","alt + tab","task switcher"]
+  };
+  const normalized=q.replace(/[^a-z0-9+ ]/g," ").replace(/\\s+/g," ").trim();
+  const aliases=Object.entries(taskAliases).filter(([task,terms])=>task.includes(normalized)||terms.some(term=>term.includes(normalized)||normalized.includes(term))).flatMap(([task,terms])=>[task,...terms]);
+  const terms=[normalized,...aliases].filter(Boolean);
   pages.forEach(p=>p.rows.forEach(row=>{
     const hay=(p.title+' '+row.join(' ')).toLowerCase();
-    if(hay.includes(q)) filtered.push({row,page:p});
+    if(terms.some(term=>hay.includes(term))) filtered.push({row,page:p});
   }));
   render();
 });
