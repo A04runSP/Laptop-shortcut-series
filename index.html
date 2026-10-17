@@ -46,6 +46,9 @@ h1{font-size:clamp(38px,7vw,78px);line-height:.98;margin:22px 0 14px;letter-spac
 .hero h1{color:#ff4058}
 .lead{max-width:720px;color:var(--muted);font-size:clamp(15px,2vw,20px);line-height:1.6}
 .pills{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin-top:18px}
+.quick-find{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;margin:18px 0 0;max-width:760px}
+.quick-find button{border:1px solid #542431;background:#171012;color:#f5eeee;border-radius:999px;padding:9px 13px;font-size:12px;cursor:pointer}
+.quick-find button:hover,.quick-find button:focus-visible{border-color:var(--accent);background:#30121a;outline:none}
 .pill{border:1px solid #382027;background:#171012;border-radius:999px;padding:7px 11px;color:#c7aeb3;font-size:12px}
 .section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:20px;margin-bottom:20px}
 .section-head h2{font-size:clamp(28px,5vw,48px);margin:0;letter-spacing:-.035em}
@@ -2157,7 +2160,8 @@ function render(){
       <h1>Laptop Shortcut Series</h1>
       <div class="lead">A searchable keyboard reference organized into 9 practical categories. Learn the key, the command, what it does, and when to use it.</div>
       <div class="pills"><span class="pill">Windows 10 / 11</span><span class="pill">Productivity</span><span class="pill">Browser</span><span class="pill">Office</span><span class="pill">Coding</span></div>
-      <div class="note"><b>How to use it:</b> choose a category from the navigation above, or use <b>← / →</b> and the Previous / Next buttons below. Search finds shortcuts across the entire guide.</div>
+      <div class="quick-find" aria-label="Find shortcuts by application"><button type="button" onclick="quickSearch('browser')">Browser</button><button type="button" onclick="quickSearch('Word')">Word</button><button type="button" onclick="quickSearch('Excel')">Excel</button><button type="button" onclick="quickSearch('PowerPoint')">PowerPoint</button><button type="button" onclick="quickSearch('Windows')">Windows</button><button type="button" onclick="quickSearch('coding')">Coding</button><button type="button" onclick="quickSearch('screenshot')">Screenshots</button></div>
+<div class="note"><b>How to use it:</b> choose a category from the navigation above, or use <b>← / →</b> and the Previous / Next buttons below. Search finds shortcuts across the entire guide.</div>
     </section>`;
   } else {
     const p=pages[current-1];
@@ -2224,6 +2228,7 @@ document.addEventListener('keydown',e=>{
     render();
   }
 });
+function quickSearch(term){const input=document.getElementById('search');input.value=term;input.dispatchEvent(new Event('input',{bubbles:true}));}
 document.getElementById('search').addEventListener('input',e=>{
   if(learningMode) closeLearning();
   const q=e.target.value.trim().toLowerCase();
