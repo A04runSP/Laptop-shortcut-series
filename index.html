@@ -104,6 +104,25 @@ h1{font-size:clamp(38px,7vw,78px);line-height:.98;margin:22px 0 14px;letter-spac
 .reference-link{display:inline-flex;align-items:center;gap:6px;padding:9px 13px;border:1px solid var(--accent2);border-radius:10px;background:color-mix(in srgb,var(--accent2) 13%,transparent);color:var(--accent2);font-weight:600;text-decoration:none;transition:background .15s ease,border-color .15s ease}
 .reference-link:hover,.reference-link:focus-visible{background:color-mix(in srgb,var(--accent2) 24%,transparent);border-color:var(--accent2);text-decoration:underline}
 .shortcut-reference{display:flex;flex-direction:column;align-items:flex-start;gap:8px}
+/* Mobile viewport containment and horizontal-overflow fix */
+html,body{width:100%;max-width:100%;overflow-x:hidden}
+.app,.topbar,.main,.category-nav,.slide,.grid,.card,.shortcut-card{min-width:0;max-width:100%}
+.main{width:100%}
+.grid{grid-template-columns:minmax(0,1fr)}
+.shortcut-card,.shortcut-heading,.shortcut-action,.shortcut-example,.shortcut-reference{min-width:0;max-width:100%}
+.shortcut-heading h3{overflow-wrap:anywhere;word-break:normal}
+.shortcut-action,.shortcut-example p,.shortcut-reference a{overflow-wrap:anywhere;word-break:break-word}
+.shortcut-card .keys{min-width:0;max-width:100%;flex-wrap:wrap}
+.shortcut-card .key{white-space:normal;max-width:100%;overflow-wrap:anywhere}
+.nav{max-width:calc(100vw - 24px);min-width:0}
+.nav button{flex-shrink:0}
+.nav .jump{flex:1;min-width:0}
+@media(max-width:760px){
+ .main{padding-left:12px;padding-right:12px}
+ .shortcut-card{padding:16px}
+ .shortcut-heading{width:100%}
+ .shortcut-card .keys{width:100%;flex-wrap:wrap}
+}
 </style>
 </head>
 <body>
